@@ -10,7 +10,7 @@ const get_all_users = async (msg) =>{
         let users = await User.find().lean()
         let list = ''
         users.forEach(user =>{
-            list += `${user.name}: ${user.chatId}\n tel:${user.phone}\n yaraldi:${user.createdAt.toLocaleString()}\n\n`
+            list += `${user.name}: ${user.chatId}\ntgsi:@${user.username}\n tel:${user.phone}\n yaraldi:${user.createdAt.toLocaleString()}\n\n`
         })
 
         bot.sendMessage(chatId, `Foydalanuvchilar ro'yxati:

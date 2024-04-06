@@ -30,7 +30,7 @@ const ready_order = async(chatId,product,count)=>{
 
     await newOrder.save() 
 
-    bot.sendMessage(chatId, `Mahsulotni buyurtma qilish uchun manzilni telegram orqali jo'nating`,
+    bot.sendMessage(chatId, `Mahsulotni buyurtma qilish uchun manzilni(lokatsiyani) jo'nating`,
         {
             reply_markup:{
                 keyboard:[
@@ -72,7 +72,7 @@ const end_order = async(chatId,location) =>{
                 remove_keyboard:true
             }
         })
-        await bot.sendMessage(admin.chatId, `Yangi buyurtma!\nBuyurtmachi: ${user.name}\nNomer: ${user.phone}\nMahsulot: ${order.product.title}\nSoni: ${order.count} ta\nUmumiy narxi:${order.count * order.product.price} so'm `,{
+        await bot.sendMessage(admin.chatId, `Yangi buyurtma!\nBuyurtmachi: ${user.name}\nTgsi:@${user.username}\nNomer: ${user.phone}\nMahsulot: ${order.product.title}\nSoni: ${order.count} ta\nUmumiy narxi:${order.count * order.product.price} so'm `,{
             reply_markup:{
                 inline_keyboard:[
                    [ 

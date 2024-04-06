@@ -13,9 +13,9 @@ bot.on('message', async msg =>{
     
     const user = await User.findOne({chatId}).lean()
 
-if (text === '/start'){
-    start(msg)
-}
+    if (text === '/start'){
+        start(msg)
+    }
 
 if (text === '/savollar') {
     bot.sendMessage(chatId, `Ko'p so'raladigon savollar:\n\n1.Manzil qayerda?\n- Toshkent shahar ichidan onlayn tarzda yetkazib beramiz\n\n2.Dostavka bormi?\n- Dostavka Toshkent shahar ichida kun davomida yetkazib beramiz va yetkazib berish 30ming so'mni tashkil qiladi, qancha miqdordan olishidan qatiy nazar!\n\n3.Viloyatlarga dastavka bormi?\n -Viloyatlarga to'lovdan keyin 2 kun ichida Unex pochta orqali yetkazib beriladi!\n\n4.Adminga aloqaga chiqish?\n- Tel:+998 99 818 87 98,\ntg:@Mansurbek_admin`); 

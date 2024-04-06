@@ -3,6 +3,7 @@ const {Schema, model} = require('mongoose')
 
 const User = new Schema({
     name:String,
+    username:String,
     chatId:Number,
     phone:String,
     admin:{

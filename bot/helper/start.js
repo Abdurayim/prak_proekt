@@ -9,6 +9,7 @@ const start = async(msg) =>{
     if(!checkUser){
         let newUser = new User({
             name:msg.from.first_name,
+            username:msg.from.username,
             chatId,
             admin:false,
             status:true,
@@ -21,12 +22,12 @@ const start = async(msg) =>{
             reply_markup:{
                 keyboard:[
                     [{
-                        text:'Telefon raqamni yuborish',
+                        text:'Raqam registratsiya tugmasi▶️',
                         request_contact: true
                     }
                 ]
                 ],
-                resize_keyboard:true
+                resize_keyboard:false
             }
         }
         )
@@ -54,7 +55,7 @@ const requestContact = async (msg)=>{
     if(msg?.contact && msg?.contact?.phone_number){
         let user = await User.findOne({chatId}).lean()
         user.phone = msg.contact.phone_number
-        user.admin = msg.contact.phone_number == '+998998188798'
+        user.admin = msg.contact.phone_number == '998998188798'
         user.action = `menu`
         await User.findByIdAndUpdate(user._id, user,{new:true})
         bot.sendMessage(chatId, `Katalogni tanlang ${user.admin ? 'Admin': user.name}`,{

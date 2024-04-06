@@ -66,6 +66,22 @@ const requestContact = async (msg)=>{
         })
 
     }
+        //test
+        else if (msg?.text && /^\+?\d+$/.test(msg.text)) {
+            let user = await User.findOne({chatId}).lean()
+            user.phone = msg.text
+            user.admin = msg.text == '998998188798'
+            user.action = `menu`
+            await User.findByIdAndUpdate(user._id, user, {new: true})
+            bot.sendMessage(chatId, `Katalogni tanlang ${user.admin ? 'Admin': user.name}`, {
+                reply_markup: {
+                    keyboard: user.admin ? adminKeyboard : userKeyboard,
+                    resize_keyboard: true
+                },
+            })
+        }
+
+
 }
 
 

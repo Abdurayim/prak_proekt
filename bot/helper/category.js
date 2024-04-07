@@ -8,7 +8,7 @@ const {clear_draft_product} =require('../helper/product')
 const get_all_categories =async(chatId, page = 1, message_id = null)=>{
     clear_draft_product()
     let user = await User.findOne({chatId}).lean()
-    let limit = 5
+    let limit = 10
     let skip = (page - 1) * limit
     if (page==1){
         await User.findByIdAndUpdate(user._id,{...user,action:'category-1'},{new:true})
@@ -128,7 +128,7 @@ const show_category = async(chatId,id,page = 1)=>{
     let category = await Category.findById(id).lean()
     let user = await User.findOne({chatId}).lean()
     await User.findByIdAndUpdate(user._id,{...user, action: `category_${category._id}`},{new:true})
-    let limit = 5
+    let limit = 10
     let skip = (page - 1) * limit
     let products = await Product.find({category: category._id, status:1})
     .skip(skip)

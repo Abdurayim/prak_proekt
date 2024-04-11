@@ -191,41 +191,46 @@ const show_category = async(chatId,id,page = 1)=>{
 
 }
 
-const remove_category = async (chatId,id) =>{
-    let user = await User.findOne({chatId}).lean()
-    let category = await Category.findById(id).lean()
-    if(user.action !=='del_category'){
-    await User.findByIdAndUpdate(user._id,{...user,action: 'del_category'},{new:true})
-    bot.sendMessage(chatId, `Siz ${category.title} turkumni o'chirmoqchimisiz?`,{
-        reply_markup:{
-            inline_keyboard:[
-                [
-                   {
-                    text: "Yo'q",
-                    callback_data: `category_${category._id}`
-                   } ,
-                   {
-                    text: 'Ha',
-                    callback_data:`del_category-${category._id}`
-                   }
-                ]
-            ]
+const remove_category = async (chatId, id) => {
+    try {
+        let user = await User.findOne({ chatId }).lean();
+        let category = await Category.findById(id).lean();
+
+        if (!category) {
+            console.error("Category not found.");
+            return;
         }
-    })
-    }else{
-        let products = await Product.find({category:category._id}).select(['_id']).lean()
 
-        await Promise.all(products.map(async (product)=>{
-            await Product.findByIdAndDelete(product._id)
-
-        }))
-        await Category.findByIdAndDelete(id)
-
-        bot.sendMessage(chatId, `${category.title} o'chirildi.
-Menyudan tanlang`)
+        if (user.action !== 'del_category') {
+            await User.findByIdAndUpdate(user._id, { ...user, action: 'del_category' }, { new: true });
+            bot.sendMessage(chatId, `Siz ${category.title} turkumni o'chirmoqchimisiz?`, {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            {
+                                text: "Yo'q",
+                                callback_data: `category_${category._id}`
+                            },
+                            {
+                                text: 'Ha',
+                                callback_data: `del_category-${category._id}`
+                            }
+                        ]
+                    ]
+                }
+            });
+        } else {
+            let products = await Product.find({ category: category._id }).select(['_id']).lean();
+            await Promise.all(products.map(async (product) => {
+                await Product.findByIdAndDelete(product._id);
+            }));
+            await Category.findByIdAndDelete(id);
+            bot.sendMessage(chatId, `${category.title} o'chirildi. Menyudan tanlang`);
+        }
+    } catch (error) {
+        console.error("Error in remove_category:", error);
     }
-
-}
+};
 
 const edit_category = async(chatId,id)=>{
     let user = await User.findOne({chatId}).lean()

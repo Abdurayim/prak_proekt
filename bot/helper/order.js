@@ -72,7 +72,7 @@ const end_order = async(chatId,location) =>{
                 remove_keyboard:true
             }
         })
-        await bot.sendMessage(admin.chatId, `Yangi buyurtma!\nBuyurtmachi: ${user.name}\nTgsi:@${user.username}\nNomer: ${user.phone}\nMahsulot: ${order.product.title}\nSoni: ${order.count} ta\nUmumiy narxi:${(order.count * parseFloat(order.product.price.replace("so'm", "").replace(/,/g, "").trim())).toLocaleString("en-US", {minimumFractionDigits: 2}) + " so'm" }`,{
+        await bot.sendMessage(admin.chatId, `Yangi buyurtma!\nBuyurtmachi: ${user.name}\nTgsi:@${user.username}\nNomer: ${user.phone}\nMahsulot: ${order?.product?.title}\nSoni: ${order?.count} ta\nUmumiy narxi:${(order?.count * parseFloat(order?.product?.price.replace("so'm", "").replace(/,/g, "").trim())).toLocaleString("en-US", {minimumFractionDigits: 2}) + " so'm" }`,{
             reply_markup:{
                 inline_keyboard:[
                    [ 
